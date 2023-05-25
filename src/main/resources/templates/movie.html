@@ -21,7 +21,7 @@
     <div th:if="${movie}">
         <span th:text="${movie.title}">Up!</span>
         <span th:text="'(' + ${movie.year} + ')'">2000</span>
-        <span><img width="5%" th:src=${movie.urlImage} /></span>
+        <span><img th:src="@{'data:image/*;base64,'+${movie.image.base64Image}}"></span>
     </div>
     <div th:unless="${movie}">Non esiste</div>
   </body>

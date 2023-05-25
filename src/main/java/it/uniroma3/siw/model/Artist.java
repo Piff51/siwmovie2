@@ -13,8 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
 public class Artist {
@@ -22,12 +25,19 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String surname;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
-	private String urlOfPicture;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dateOfDeath;
+
+	@OneToOne
+	private Image profilePicture;;
 	
 	@ManyToMany(mappedBy="actors")
 	private Set<Movie> starredMovies;
@@ -72,13 +82,39 @@ public class Artist {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	public String getUrlOfPicture() {
-		return urlOfPicture;
+
+	public LocalDate getDateOfDeath() {
+		return this.dateOfDeath;
 	}
-	
-	public void setUrlOfPicture(String urlOfPicture) {
-		this.urlOfPicture = urlOfPicture;
+
+	public void setDateOfDeath(LocalDate dateOfDeath) {
+		this.dateOfDeath = dateOfDeath;
 	}
+
+	public Image getProfilePicture() {
+		return this.profilePicture;
+	}
+
+	public void setProfilePicture(Image profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
+	public Set<Movie> getStarredMovies() {
+		return this.starredMovies;
+	}
+
+	public void setStarredMovies(Set<Movie> starredMovies) {
+		this.starredMovies = starredMovies;
+	}
+
+	public List<Movie> getDirectedMovies() {
+		return this.directedMovies;
+	}
+
+	public void setDirectedMovies(List<Movie> directedMovies) {
+		this.directedMovies = directedMovies;
+	}
+
 	
 	public Set<Movie> getActorOf() {
 		return starredMovies;

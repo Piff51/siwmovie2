@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -30,6 +31,9 @@ public class Movie {
 	private Integer year;
     
 	private String urlImage;
+	
+    @OneToOne
+    private Image image;
 	
 	@ManyToOne
 	private Artist director;
@@ -83,6 +87,15 @@ public class Movie {
 	public void setActors(Set<Artist> actors) {
 		this.actors = actors;
 	}
+
+	public Image getImage() {
+		return this.image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
 
 	@Override
 	public int hashCode() {
