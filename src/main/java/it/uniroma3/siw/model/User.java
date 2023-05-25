@@ -1,9 +1,14 @@
 package it.uniroma3.siw.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +21,13 @@ public class User {
 	private String name;
 	private String surname;
 	private String email;
+
+	@OneToMany(mappedBy = "user")
+	private Map<Movie,Review> reviews;
+
+	public User(){
+		this.reviews = new HashMap<>();
+	}
 
     public Long getId() {
 		return id;
@@ -47,4 +59,13 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Map<Movie,Review> getReviews() {
+		return this.reviews;
+	}
+
+	public void setReviews(Map<Movie,Review> reviews) {
+		this.reviews = reviews;
+	}
+
 }

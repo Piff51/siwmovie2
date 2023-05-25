@@ -9,8 +9,6 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,15 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siw.controller.session.SessionData;
 import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
-import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Movie;
+import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.ArtistRepository;
 import it.uniroma3.siw.repository.ImageRepository;
 import it.uniroma3.siw.repository.MovieRepository;
-import it.uniroma3.siw.service.CredentialsService;
 
 @Controller
 public class MovieController {
@@ -41,12 +39,12 @@ public class MovieController {
 
 	@Autowired 
 	private MovieValidator movieValidator;
-	
-	@Autowired 
-	private CredentialsService credentialsService;
 
 	@Autowired
 	private ImageRepository imageRepository;
+
+	@Autowired
+	private SessionData sessionData;
 
 	@Transactional
 	@GetMapping(value="/admin/formNewMovie")
@@ -108,7 +106,15 @@ public class MovieController {
             movie.setImage(movieImg);
 			this.movieRepository.save(movie); 
 			model.addAttribute("movie", movie);
-			return "movie.html";
+			try{
+				User user = this.sessionData.getLoggedUser();
+				model.addAttribute("user", user);
+				return "movie.html";
+			}
+			catch(Exception e){
+				return "movie.html";
+			}
+			
 		} else {
 			return "admin/formNewMovie.html"; 
 		}
@@ -118,7 +124,14 @@ public class MovieController {
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("movie", this.movieRepository.findById(id).get());
-		return "movie.html";
+		try{
+			User user = this.sessionData.getLoggedUser();
+			model.addAttribute("user", user);
+			return "movie.html";
+		}
+		catch(Exception e){
+			return "movie.html";
+		}
 	}
 
 	@Transactional

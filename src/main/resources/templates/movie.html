@@ -23,6 +23,30 @@
         <span th:text="'(' + ${movie.year} + ')'">2000</span>
         <span><img th:src="@{'data:image/*;base64,'+${movie.image.base64Image}}"></span>
     </div>
+	<div th:if="${#request.userPrincipal}">
+		<div th:if="${user.reviews.get(movie)}">
+			<div>Rating: <span th:text="user.reviews.get(movie).rating"></span></div>
+			<div>Title: <span th:text="user.reviews.get(movie).title"></span></div>
+			<div>Comment: <span th:text="user.reviews.get(movie).comment"></span></div>
+		</div>
+		<div th:unless="${user.reviews.get(movie)}">
+			<span>Add a review</span>
+			<form th:action="@{/review}" method="post">
+				<input type="hidden" name="movie" th:value="${movie.id}" />
+				<div>Rating:<input type="number" min="1" max="5" name="rating"></div>
+				<div>Title:<input type="text" name="title"></div>
+				<div>Comment:<input type="text" name="comment"></div>
+				<div><button type="submit">Conferma</button></div>
+			</form>
+		</div>
+	</div>
+	<div th:if="${movie.reviews != null && !movie.reviews.isEmpty()}">
+		<ul th:each="review : ${movie.reviews}">
+			<li th:text="${review.rating}"></li>
+			<li th:text="${review.title}"></li>
+			<li th:text="${review.comment}"></li>
+		</ul>
+	</div>
     <div th:unless="${movie}">Non esiste</div>
   </body>
 </html>
