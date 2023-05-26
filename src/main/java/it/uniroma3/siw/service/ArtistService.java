@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Image;
+import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.repository.ArtistRepository;
 import it.uniroma3.siw.repository.ImageRepository;
 
@@ -40,6 +41,17 @@ public class ArtistService {
     @Transactional
     public Iterable<Artist> findActorsNotInMovie(Long movieId) {
         return this.artistRepository.findActorsNotInMovie(movieId);
+    }
+    @Transactional
+    public void deleteArtist(Long id) {
+        Artist artist = this.findArtist(id);
+        for (Movie movie : artist.getStarredMovies()) {
+            movie.getActors().remove(artist);
+        }
+        for (Movie movie : artist.getDirectorOf()){
+            movie.setDirector(null);
+        }
+        this.artistRepository.delete(artist);
     }
 
 }

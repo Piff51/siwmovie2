@@ -66,4 +66,23 @@ public class ArtistController {
 		model.addAttribute("artists", this.artistService.findAllArtists());
 		return "artists.html";
 	}
+	@Transactional
+	@GetMapping(value = "/admin/manageArtists")
+	public String manageArtists(Model model) {
+		model.addAttribute("artists", this.artistService.findAllArtists());
+		return "admin/manageArtists.html";
+	}
+	@Transactional
+	@GetMapping(value = "/admin/DeleteArtist/{id}")
+	public String deleteArtist(@PathVariable("id") Long id, Model model) {
+		this.artistService.deleteArtist(id);
+		model.addAttribute("artists", this.artistService.findAllArtists());
+		return "admin/manageArtists.html";
+	}
+	@Transactional
+	@GetMapping(value = "/admin/formUpdateArtist/{id}")
+	public String formUpdateArtist(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("artist", this.artistService.findArtist(id));
+		return "admin/formUpdateArtist.html";
+	}
 }
