@@ -28,6 +28,7 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.ArtistRepository;
 import it.uniroma3.siw.repository.ImageRepository;
 import it.uniroma3.siw.repository.MovieRepository;
+import it.uniroma3.siw.repository.ReviewRepository;
 
 @Controller
 public class MovieController {
@@ -45,6 +46,9 @@ public class MovieController {
 
 	@Autowired
 	private SessionData sessionData;
+
+	@Autowired
+	private ReviewRepository reviewRepository;
 
 	@Transactional
 	@GetMapping(value="/admin/formNewMovie")
@@ -123,13 +127,19 @@ public class MovieController {
 	@Transactional
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("movie", this.movieRepository.findById(id).get());
+		Movie movie = this.movieRepository.findById(id).get();
+		model.addAttribute("movie", movie);
 		try{
 			User user = this.sessionData.getLoggedUser();
 			model.addAttribute("user", user);
+			if(user.getReviews().containsKey(movie)){
+				model.addAttribute("userReview", user.getReviews().get(movie));
+			}
+			model.addAttribute("movieReviews", this.reviewRepository.findMovieReviewsWithoutUser(movie.getId(), user.getId()));
 			return "movie.html";
 		}
 		catch(Exception e){
+			model.addAttribute("movieReviews", movie.getReviews());
 			return "movie.html";
 		}
 	}

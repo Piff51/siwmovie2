@@ -1,5 +1,7 @@
 package it.uniroma3.siw.controller;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,8 @@ public class ReviewController {
 
 		model.addAttribute("user", user);
 		model.addAttribute("movie", movie);
+    model.addAttribute("userReview", review);
+    model.addAttribute("movieReviews", this.reviewRepository.findMovieReviewsWithoutUser(movieId, user.getId()));
 		return "movie.html";
 	
     }
