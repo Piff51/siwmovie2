@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Movie;
+import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.repository.ImageRepository;
 import it.uniroma3.siw.repository.MovieRepository;
 
@@ -83,6 +84,14 @@ public class MovieService {
     }
     public List<Movie> findMovieByTitle(String title) {
         return this.movieRepository.findByTitle(title);
+    }
+    public void deleteMovie(Long id) {
+        Movie movie = this.findMovie(id);
+        for (Artist artist : movie.getActors()) {
+            artist.getStarredMovies().remove(movie);
+        }
+        movie.getDirector().getDirectedMovies().remove(movie);
+        this.movieRepository.delete(movie);
     }
     
 }

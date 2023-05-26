@@ -50,6 +50,14 @@ public class MovieController {
 		return "admin/formUpdateMovie.html";
 	}
 	@Transactional
+	@GetMapping(value = "/admin/DeleteMovie/{id}")
+	public String deleteMovie(@PathVariable("id") Long id, Model model) {
+		this.movieService.deleteMovie(id);
+		model.addAttribute("movies", this.movieService.findAllMovies());
+		return "admin/manageMovies.html";
+	}
+	
+	@Transactional
 	@GetMapping(value = "/admin/indexMovie")
 	public String indexMovie() {
 		return "admin/indexMovie.html";

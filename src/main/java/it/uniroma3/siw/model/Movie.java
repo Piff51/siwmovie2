@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,11 +35,12 @@ public class Movie {
     @Min(1900)
     @Max(2023)
 	private Integer year;
-    
-	private String urlImage;
 	
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Image image;
+
+	@OneToMany(cascade = CascadeType.REMOVE)
+	private List<Image> images;
 	
 	@ManyToOne
 	private Artist director;
@@ -46,12 +48,13 @@ public class Movie {
 	@ManyToMany
 	private Set<Artist> actors;
 
-	@OneToMany(mappedBy = "movie")
+	@OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
 	private List<Review> reviews;
 
 	public Movie(){
 		this.actors = new HashSet<>();
 		this.reviews = new LinkedList<>();
+		this.images = new LinkedList<>();
 	}
 
 	public Long getId() {
@@ -76,14 +79,14 @@ public class Movie {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
-	
-	public String getUrlImage() {
-		return urlImage;
+
+	public List<Image> getImages() {
+		return this.images;
 	}
 
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
-	}
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}	
 
 	public Artist getDirector() {
 		return director;
