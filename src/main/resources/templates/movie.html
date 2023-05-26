@@ -25,27 +25,27 @@
     </div>
 	<div th:if="${#request.userPrincipal}">
 		<div th:if="${userReview}">
-			<div>Rating: <span th:text="${userReview.rating}"></span></div>
-			<div>Title: <span th:text="${userReview.title}"></span></div>
-			<div>Comment: <span th:text="${userReview.comment}"></span></div>
+			<div>Voto: <span th:text="${userReview.rating}"></span></div>
+			<div>Titolo: <span th:text="${userReview.title}"></span></div>
+			<div>Commento: <span th:text="${userReview.comment}"></span></div>
 		</div>
 		<div th:unless="${userReview}">
 			<span>Add a review</span>
 			<form th:action="@{/review}" method="post">
 				<input type="hidden" name="movie" th:value="${movie.id}" />
-				<div>Rating:<input type="number" min="1" max="5" name="rating"></div>
-				<div>Title:<input type="text" name="title"></div>
-				<div>Comment:<input type="text" name="comment"></div>
+				<div>Voto:<input type="number" min="1" max="5" name="rating"></div>
+				<div>Titolo:<input type="text" name="title"></div>
+				<div>Commento:<input type="text" name="comment"></div>
 				<div><button type="submit">Conferma</button></div>
 			</form>
 		</div>
 	</div>
 	<div th:if="${movieReviews != null && !movieReviews.isEmpty()}">
 		<ul th:each="review : ${movieReviews}">
-			<span th:text="'Author: ' + ${review.user.name}"></span>
-			<li th:text="'Rating: '+${review.rating}"></li>
-			<li th:text="'Title: '+${review.title}"></li>
-			<li th:text="'Comment: '+${review.comment}"></li>
+			<span th:text="'Autore: ' + ${review.user.name}"></span>
+			<li th:text="'Voto: '+${review.rating}"></li>
+			<li th:text="'Titolo: '+${review.title}"></li>
+			<li th:text="'Commento: '+${review.comment}"></li>
 		</ul>
 	</div>
     <div th:unless="${movie}">Non esiste</div>

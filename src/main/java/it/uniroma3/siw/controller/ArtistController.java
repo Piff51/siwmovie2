@@ -1,32 +1,31 @@
 package it.uniroma3.siw.controller;
 
 import java.io.IOException;
-
 import javax.transaction.Transactional;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import it.uniroma3.siw.controller.validator.ArtistValidator;
 import it.uniroma3.siw.model.Artist;
-import it.uniroma3.siw.model.Image;
-import it.uniroma3.siw.repository.ArtistRepository;
-import it.uniroma3.siw.repository.ImageRepository;
+import it.uniroma3.siw.service.ArtistService;
 
 @Controller
 public class ArtistController {
 	
-	@Autowired 
-	private ArtistRepository artistRepository;
 
 	@Autowired
-	private ImageRepository imageRepository;
+	private ArtistValidator artistValidator;
+
+	@Autowired
+	private ArtistService artistService;
 
 	@Transactional
 	@GetMapping(value="/admin/formNewArtist")
@@ -43,16 +42,13 @@ public class ArtistController {
 	
 	@Transactional
 	@PostMapping("/admin/artist")
-	public String newArtist( Model model, @ModelAttribute("artist") Artist artist, @RequestParam("file") MultipartFile image)  throws IOException{
-		if (!artistRepository.existsByNameAndSurname(artist.getName(), artist.getSurname())) {
-			Image artistImg = new Image(image.getBytes());
-            this.imageRepository.save(artistImg);
-            artist.setProfilePicture(artistImg);
-			this.artistRepository.save(artist); 
+	public String newArtist(Model model,@Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult, @RequestParam("file") MultipartFile image)  throws IOException{
+		this.artistValidator.validate(artist, bindingResult);
+		if (!bindingResult.hasErrors()) {
+			this.artistService.saveArtist(artist, image);
 			model.addAttribute("artist", artist);
 			return "artist.html";
 		} else {
-			model.addAttribute("messaggioErrore", "Questo artista esiste già");
 			return "admin/formNewArtist.html"; 
 		}
 	}
@@ -60,14 +56,14 @@ public class ArtistController {
 	@Transactional
 	@GetMapping("/artist/{id}")
 	public String getArtist(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("artist", this.artistRepository.findById(id).get());
+		model.addAttribute("artist", this.artistService.findArtist(id));
 		return "artist.html";
 	}
 
 	@Transactional
 	@GetMapping("/artist")
 	public String getArtists(Model model) {
-		model.addAttribute("artists", this.artistRepository.findAll());
+		model.addAttribute("artists", this.artistService.findAllArtists());
 		return "artists.html";
 	}
 }

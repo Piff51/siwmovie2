@@ -22,20 +22,26 @@
 	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
 	<h1>Aggiungi un artista</h1>
 	<form th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
-		<div>
-			<span th:text="${messaggioErrore}">Errore</span>
+		<div th:if="${#fields.hasGlobalErrors()}">
+			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
 		</div>
 		
 		<div>
 			<label>Nome:</label> <span><input required type="text" th:field="${artist.name}" /></span>
+			<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 		</div>
 
 		<div>
 			<label>Cognome:</label> <span><input required type="text" th:field="${artist.surname}" /></span>
+			<span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
 		</div>
 
 		<div>
 			<label>Data di nascita:</label> <span><input type="date" th:field="${artist.dateOfBirth}" /></span>
+		</div>
+
+		<div>
+			<label>Data di Morte:</label> <span><input type="date" th:field="${artist.dateOfDeath}" /></span>
 		</div>
 
 		<div>
