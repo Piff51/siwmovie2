@@ -132,6 +132,12 @@ public class MovieController {
 		return "foundMovies.html";
 	}
 	@Transactional
+	@PostMapping("/searchMoviesByTitle")
+	public String searchMoviesByTitle(Model model, @RequestParam String title) {
+		model.addAttribute("movies", this.movieService.findMovieByTitle(title));
+		return "foundMovies.html";
+	}
+	@Transactional
 	@GetMapping("/admin/updateActors/{id}")
 	public String updateActors(@PathVariable("id") Long id, Model model) {
 		List<Artist> actorsToAdd = this.movieService.actorsToAdd(id);

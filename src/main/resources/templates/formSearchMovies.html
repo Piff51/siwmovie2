@@ -23,6 +23,12 @@
 		</div>
 		<div><input type="submit" /></div>
 	</form>
+	<h1>Cerca film per titolo</h1>
+	<form th:action="@{/searchMoviesByTitle}" method="post">
+		<div>Titolo: <input type="text" th:value="${title}" name="title" />
+		</div>
+		<div><input type="submit" /></div>
+	</form>
 </body>
 
 </html>
