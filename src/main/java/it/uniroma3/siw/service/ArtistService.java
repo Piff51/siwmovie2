@@ -1,6 +1,9 @@
 package it.uniroma3.siw.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -14,6 +17,7 @@ import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Movie;
 import it.uniroma3.siw.repository.ArtistRepository;
 import it.uniroma3.siw.repository.ImageRepository;
+import it.uniroma3.siw.repository.MovieRepository;
 
 @Service
 public class ArtistService {
@@ -22,6 +26,10 @@ public class ArtistService {
     private ArtistRepository artistRepository;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private MovieService movieService;
+    @Autowired
+    private MovieRepository movieRepository;
 
     @Transactional
     public void saveArtist(@Valid Artist artist, MultipartFile image) throws IOException{
@@ -52,6 +60,56 @@ public class ArtistService {
             movie.setDirector(null);
         }
         this.artistRepository.delete(artist);
+    }
+    @Transactional
+    public List<Movie> directedMovieToAdd(Long id) {
+        List<Movie> moviesToAdd = new ArrayList<>();
+
+		for (Movie m : this.movieService.findMovieNotDirected(id)) {
+			moviesToAdd.add(m);
+		}
+		return moviesToAdd;
+    }
+  
+    public List<Movie> starredMovieToAdd(Long id) {
+        List<Movie> moviesToAdd = new ArrayList<>();
+
+		for (Movie m : this.movieService.findMovieNotStarred(id)) {
+			moviesToAdd.add(m);
+		}
+		return moviesToAdd;
+    }
+    public Artist addDirectedMovieToArtist(Long movieId, Long artistId) {
+        Artist artist = this.findArtist(artistId);
+        Movie movie = this.movieService.findMovie(movieId);
+        movie.setDirector(artist);
+        this.movieRepository.save(movie);
+        return artist;
+    }
+    public Artist addStarredMovieToArtist(Long movieId, Long artistId) {
+        Artist artist = this.findArtist(artistId);
+        Movie movie = this.movieService.findMovie(movieId);
+        Set<Artist> artists = movie.getActors();
+        artists.add(artist);
+        this.movieRepository.save(movie);
+        return artist;
+    }
+    @Transactional
+    public Artist removeDirectedMovieFromArtist(Long artistId, Long movieId) {
+        Movie movie = this.movieService.findMovie(movieId);
+        Artist artist = this.findArtist(artistId);
+        movie.setDirector(null);
+        this.movieRepository.save(movie);
+        return artist;
+    }
+    @Transactional
+    public Artist removeStarredMovieFromArtist(Long artistId, Long movieId) {
+        Movie movie = this.movieService.findMovie(movieId);
+        Artist artist = this.findArtist(artistId);
+        Set<Artist> artists = movie.getActors();
+        artists.remove(artist);
+        this.movieRepository.save(movie);
+        return artist;
     }
 
 }
