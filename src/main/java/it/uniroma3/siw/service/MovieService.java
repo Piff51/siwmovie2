@@ -88,11 +88,11 @@ public class MovieService {
         this.movieRepository.save(movie);
         return movie;
     }
-
+    @Transactional
     public List<Movie> findMovieByTitle(String title) {
         return this.movieRepository.findByTitle(title);
     }
-
+    @Transactional
     public void deleteMovie(Long id) {
         Movie movie = this.findMovie(id);
         for (Artist artist : movie.getActors()) {

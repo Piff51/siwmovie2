@@ -43,6 +43,7 @@ public class MovieController {
 		model.addAttribute("movie", new Movie());
 		return "admin/formNewMovie.html";
 	}
+	
 	@Transactional
 	@GetMapping(value = "/admin/formUpdateMovie/{id}")
 	public String formUpdateMovie(@PathVariable("id") Long id, Model model) {
@@ -91,6 +92,7 @@ public class MovieController {
 		if (!bindingResult.hasErrors()) {
 			this.movieService.saveMovie(movie, image);
 			model.addAttribute("movie", movie);
+			model.addAttribute("base64Image", movie.getImage().getbase64Image());
 			try {
 				User user = this.sessionData.getLoggedUser();
 				model.addAttribute("user", user);
@@ -108,6 +110,7 @@ public class MovieController {
 	public String getMovie(@PathVariable("id") Long id, Model model) {
 		Movie movie = this.movieService.findMovie(id);
 		model.addAttribute("movie", movie);
+		model.addAttribute("base64Image", movie.getImage().getbase64Image());
 		try {
 			User user = this.sessionData.getLoggedUser();
 			model.addAttribute("user", user);

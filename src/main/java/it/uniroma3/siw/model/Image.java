@@ -1,11 +1,15 @@
 package it.uniroma3.siw.model;
 
+
 import java.util.Base64;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class Image {
@@ -13,29 +17,36 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String base64Image;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] image;
 
     public Image(){
 
     }
 
     public Image(byte[] bytes){
-        this.setBase64Image(Base64.getEncoder().encodeToString(bytes));
+        this.image = bytes;
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getBase64Image() {
-        return base64Image;
+    public byte[] getImage() {
+        return this.image;
     }
 
-    public void setBase64Image(String base64Image) {
-        this.base64Image = base64Image;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
+
+    public String getbase64Image(){
+        return Base64.getEncoder().encodeToString(image);
+    }
+   
 }
