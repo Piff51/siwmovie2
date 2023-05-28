@@ -110,7 +110,6 @@ public class MovieController {
 	public String getMovie(@PathVariable("id") Long id, Model model) {
 		Movie movie = this.movieService.findMovie(id);
 		model.addAttribute("movie", movie);
-		model.addAttribute("base64Image", movie.getImage().getbase64Image());
 		try {
 			User user = this.sessionData.getLoggedUser();
 			model.addAttribute("user", user);

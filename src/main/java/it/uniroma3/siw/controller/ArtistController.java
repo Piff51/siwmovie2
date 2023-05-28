@@ -50,7 +50,6 @@ public class ArtistController {
 		if (!bindingResult.hasErrors()) {
 			this.artistService.saveArtist(artist, image);
 			model.addAttribute("artist", artist);
-			model.addAttribute("base64Image", artist.getProfilePicture().getbase64Image());
 			return "artist.html";
 		} else {
 			return "admin/formNewArtist.html";
@@ -60,9 +59,7 @@ public class ArtistController {
 	@Transactional
 	@GetMapping("/artist/{id}")
 	public String getArtist(@PathVariable("id") Long id, Model model) {
-		Artist artist = this.artistService.findArtist(id);
-		model.addAttribute("artist", artist);
-		model.addAttribute("base64Image", artist.getProfilePicture().getbase64Image());
+		model.addAttribute("artist", this.artistService.findArtist(id));
 		return "artist.html";
 	}
 
