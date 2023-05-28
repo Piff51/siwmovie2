@@ -98,7 +98,6 @@ public class MovieController {
 		if (!bindingResult.hasErrors()) {
 			this.movieService.saveMovie(movie, image);
 			model.addAttribute("movie", movie);
-			model.addAttribute("base64Image", movie.getImage().getbase64Image());
 			return "movie.html";
 		} else {
 			return "admin/formNewMovie.html";
