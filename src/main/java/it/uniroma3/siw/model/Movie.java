@@ -37,11 +37,9 @@ public class Movie {
     @Max(2023)
 	private Integer year;
 	
-	@Lob
     @OneToOne(cascade = CascadeType.REMOVE)
     private Image image;
 
-	@Lob
 	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Image> images;
 	

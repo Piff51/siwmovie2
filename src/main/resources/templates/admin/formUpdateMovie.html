@@ -44,6 +44,15 @@
 				<button type="button">Modifica</button>
 			</a>
 		</div>
+		<div th:if="${movie.reviews != null && !movie.reviews.isEmpty()}">
+			<ul th:each="review : ${movie.reviews}">
+				<span th:text="'Autore: ' + ${review.user.name}"></span>
+				<li th:text="'Voto: '+${review.rating}"></li>
+				<li th:text="'Titolo: '+${review.title}"></li>
+				<li th:text="'Commento: '+${review.comment}"></li>
+				<a th:href="@{'/admin/deleteReview'+'/'+${review.id}}">rimuovi Recensione</a>
+			</ul>
+		</div>
 		<div th:unless="${movie}">Film non esistente</div>
 </body>
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Film</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
+    <h1>Dettagli Film</h1>
+    <div th:if="${movie}">
+        <span th:text="${movie.title}">Up!</span>
+        <span th:text="'(' + ${movie.year} + ')'">2000</span>
+        <span><img th:src="@{'data:image/*;base64,'+${base64Image}}"></span>
+    </div>
+	<div th:if="${#request.userPrincipal}">
+		<div th:if="${userReview}">
+            <form th:action="@{/updateReview}" method="post">
+			<div>Voto: <input type="number" name="rating" th:value="${userReview.rating}"></div>
+			<div>Titolo: <input type="text" name="title" th:value="${userReview.title}"></div>
+			<div>Commento: <input type="text" name="comment" th:value="${userReview.comment}"></div>
+            <input type="hidden" name="review" th:value="${userReview.id}">
+            <button type="submit">Modifica</button>
+        </form>
+		</div>
+	</div>
+    <div th:unless="${movie}">Non esiste</div>
+  </body>
+</html>

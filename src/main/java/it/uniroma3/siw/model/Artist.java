@@ -38,7 +38,6 @@ public class Artist {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfDeath;
 
-	@Lob
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Image profilePicture;;
 	

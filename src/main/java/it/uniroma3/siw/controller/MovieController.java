@@ -36,20 +36,22 @@ public class MovieController {
 	private ArtistService artistService;
 	@Autowired
 	private ReviewService reviewService;
-	
+
 	@Transactional
 	@GetMapping(value = "/admin/formNewMovie")
 	public String formNewMovie(Model model) {
 		model.addAttribute("movie", new Movie());
 		return "admin/formNewMovie.html";
 	}
-	
+
 	@Transactional
 	@GetMapping(value = "/admin/formUpdateMovie/{id}")
 	public String formUpdateMovie(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("movie", this.movieService.findMovie(id));
+		Movie movie = this.movieService.findMovie(id);
+		model.addAttribute("movie", movie);
 		return "admin/formUpdateMovie.html";
 	}
+
 	@Transactional
 	@GetMapping(value = "/admin/DeleteMovie/{id}")
 	public String deleteMovie(@PathVariable("id") Long id, Model model) {
@@ -57,18 +59,20 @@ public class MovieController {
 		model.addAttribute("movies", this.movieService.findAllMovies());
 		return "admin/manageMovies.html";
 	}
-	
+
 	@Transactional
 	@GetMapping(value = "/admin/indexMovie")
 	public String indexMovie() {
 		return "admin/indexMovie.html";
 	}
+
 	@Transactional
 	@GetMapping(value = "/admin/manageMovies")
 	public String manageMovies(Model model) {
 		model.addAttribute("movies", this.movieService.findAllMovies());
 		return "admin/manageMovies.html";
 	}
+
 	@Transactional
 	@GetMapping(value = "/admin/setDirectorToMovie/{directorId}/{movieId}")
 	public String setDirectorToMovie(@PathVariable("directorId") Long directorId, @PathVariable("movieId") Long movieId,
@@ -77,6 +81,7 @@ public class MovieController {
 		model.addAttribute("movie", movie);
 		return "admin/formUpdateMovie.html";
 	}
+
 	@Transactional
 	@GetMapping(value = "/admin/addDirector/{id}")
 	public String addDirector(@PathVariable("id") Long id, Model model) {
@@ -84,6 +89,7 @@ public class MovieController {
 		model.addAttribute("movie", this.movieService.findMovie(id));
 		return "admin/directorsToAdd.html";
 	}
+
 	@Transactional
 	@PostMapping("/admin/movie")
 	public String newMovie(Model model, @Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult,
@@ -93,13 +99,7 @@ public class MovieController {
 			this.movieService.saveMovie(movie, image);
 			model.addAttribute("movie", movie);
 			model.addAttribute("base64Image", movie.getImage().getbase64Image());
-			try {
-				User user = this.sessionData.getLoggedUser();
-				model.addAttribute("user", user);
-				return "movie.html";
-			} catch (Exception e) {
-				return "movie.html";
-			}
+			return "movie.html";
 		} else {
 			return "admin/formNewMovie.html";
 		}
@@ -125,29 +125,34 @@ public class MovieController {
 			return "movie.html";
 		}
 	}
+
 	@Transactional
 	@GetMapping("/movie")
 	public String getMovies(Model model) {
 		model.addAttribute("movies", this.movieService.findAllMovies());
 		return "movies.html";
 	}
+
 	@Transactional
 	@GetMapping("/formSearchMovies")
 	public String formSearchMovies() {
 		return "formSearchMovies.html";
 	}
+
 	@Transactional
 	@PostMapping("/searchMovies")
 	public String searchMovies(Model model, @RequestParam int year) {
 		model.addAttribute("movies", this.movieService.findMovieByYear(year));
 		return "foundMovies.html";
 	}
+
 	@Transactional
 	@PostMapping("/searchMoviesByTitle")
 	public String searchMoviesByTitle(Model model, @RequestParam String title) {
 		model.addAttribute("movies", this.movieService.findMovieByTitle(title));
 		return "foundMovies.html";
 	}
+
 	@Transactional
 	@GetMapping("/admin/updateActors/{id}")
 	public String updateActors(@PathVariable("id") Long id, Model model) {
@@ -156,6 +161,7 @@ public class MovieController {
 		model.addAttribute("movie", this.movieService.findMovie(id));
 		return "admin/actorsToAdd.html";
 	}
+
 	@Transactional
 	@GetMapping(value = "/admin/addActorToMovie/{actorId}/{movieId}")
 	public String addActorToMovie(@PathVariable("actorId") Long actorId, @PathVariable("movieId") Long movieId,
@@ -166,6 +172,7 @@ public class MovieController {
 		model.addAttribute("actorsToAdd", actorsToAdd);
 		return "admin/actorsToAdd.html";
 	}
+
 	@Transactional
 	@GetMapping(value = "/admin/removeActorFromMovie/{actorId}/{movieId}")
 	public String removeActorFromMovie(@PathVariable("actorId") Long actorId, @PathVariable("movieId") Long movieId,

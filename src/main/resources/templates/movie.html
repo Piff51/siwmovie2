@@ -28,6 +28,8 @@
 			<div>Voto: <span th:text="${userReview.rating}"></span></div>
 			<div>Titolo: <span th:text="${userReview.title}"></span></div>
 			<div>Commento: <span th:text="${userReview.comment}"></span></div>
+			<div><a th:href="@{'/updateReview/'+${userReview.id}}">Modifica Recensione</a></div>
+			<div><a th:href="@{'/deleteReview/'+${userReview.id}}">Elimina Recensione</a></div>
 		</div>
 		<div th:unless="${userReview}">
 			<span>Add a review</span>

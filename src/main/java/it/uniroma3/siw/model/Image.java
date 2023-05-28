@@ -3,13 +3,10 @@ package it.uniroma3.siw.model;
 
 import java.util.Base64;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
 @Entity
 public class Image {
@@ -17,8 +14,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
+    
     private byte[] image;
 
     public Image(){
