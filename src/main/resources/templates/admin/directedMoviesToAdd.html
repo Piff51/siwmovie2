@@ -21,7 +21,7 @@
     <h1 th:text="'Film diretti da ' + ${artist.name}"></h1>
 	<div th:if="${artist.directedMovies.isEmpty()}">Non ci sono film diretti da questo attore</div>
 	<ul>
-		<li th:each="movie : ${artist.directedMovies}">
+		<li th:each="movie : ${directedMovies}">
 			<span th:text="${movie.title}+' ('+${movie.year}+')'"></span>
 			<a th:href="@{'/admin/removeDirectedMovieFromArtist/'+ ${artist.id}+'/'+${movie.id}}">Cancella</a>
 		</li>

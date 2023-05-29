@@ -88,7 +88,10 @@ public class ArtistController {
 	@Transactional
 	@GetMapping(value = "/admin/formUpdateArtist/{id}")
 	public String formUpdateArtist(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("artist", this.artistService.findArtist(id));
+		Artist artist = this.artistService.findArtist(id);
+		List<Movie> directedMovies = this.artistService.getDirectedMovies(id);
+		model.addAttribute("artist", artist);
+		model.addAttribute("directedMovies", directedMovies);
 		return "admin/formUpdateArtist.html";
 	}
 
@@ -96,8 +99,10 @@ public class ArtistController {
 	@GetMapping("/admin/updateDirectedMovies/{id}")
 	public String updateDirectedMovies(@PathVariable("id") Long id, Model model) {
 		List<Movie> movieToAdd = this.artistService.directedMovieToAdd(id);
+		Artist artist = this.artistService.findArtist(id);
 		model.addAttribute("directedMoviesToAdd", movieToAdd);
-		model.addAttribute("artist", this.artistService.findArtist(id));
+		model.addAttribute("directedMovies", this.artistService.getDirectedMovies(id));
+		model.addAttribute("artist",artist);
 		return "admin/directedMoviesToAdd.html";
 	}
 
@@ -118,6 +123,7 @@ public class ArtistController {
 		Artist artist = this.artistService.addDirectedMovieToArtist(movieId, artistId);
 		List<Movie> moviesToAdd = this.artistService.directedMovieToAdd(artistId);
 		model.addAttribute("artist", artist);
+		model.addAttribute("directedMovies", this.artistService.getDirectedMovies(artistId));
 		model.addAttribute("directedMoviesToAdd", moviesToAdd);
 		return "admin/directedMoviesToAdd.html";
 	}
@@ -142,6 +148,7 @@ public class ArtistController {
 		Artist artist = this.artistService.removeDirectedMovieFromArtist(artistId, movieId);
 		List<Movie> moviesToAdd = this.artistService.directedMovieToAdd(artistId);
 		model.addAttribute("artist", artist);
+		model.addAttribute("directedMovies", this.artistService.getDirectedMovies(artistId));
 		model.addAttribute("directedMoviesToAdd", moviesToAdd);
 		return "admin/directedMoviesToAdd.html";
 	}
@@ -157,4 +164,5 @@ public class ArtistController {
 		model.addAttribute("starredMoviesToAdd", moviesToAdd);
 		return "admin/starredMoviesToAdd.html";
 	}
+	
 }

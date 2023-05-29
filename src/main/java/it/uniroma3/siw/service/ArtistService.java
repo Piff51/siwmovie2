@@ -2,6 +2,7 @@ package it.uniroma3.siw.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -113,6 +114,21 @@ public class ArtistService {
         movie.getActors().remove(artist);
         this.artistRepository.save(artist);
         return artist;
+    }
+
+    @Transactional
+    public Iterable<Movie> findDirectedMovies(Long artistId){
+		return this.movieRepository.findDirectedMovies(artistId);
+	}
+
+    @Transactional
+    public List<Movie> getDirectedMovies(Long artistId) {
+        List<Movie> out = new LinkedList<>();
+
+        for (Movie m : this.findDirectedMovies(artistId)) {
+            out.add(m);
+        }
+        return out;
     }
 
 }

@@ -22,4 +22,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
 	@Query(value = "select * from movie m where m.id not in (select starred_movies_id from movie_actors ma where ma.actors_id = :artistId)", nativeQuery = true)
     public Iterable<Movie> findMovieNotStarred(@Param("artistId") Long id);	
+
+	@Query(value = "select * from movie m where m.director_id = :artistId", nativeQuery = true)
+    public Iterable<Movie> findDirectedMovies(@Param("artistId")Long id);
 }

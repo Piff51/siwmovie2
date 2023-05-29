@@ -27,7 +27,7 @@
 			<span th:text="${artist.surname}">2000</span>
 		</div>
 			<span>Film di cui è direttore: </span>
-            <div th:each="directedMovie : ${artist.directedMovies}">
+            <div th:each="directedMovie : ${directedMovies}">
                 <span th:text="${directedMovie.title} + '(' + ${directedMovie.year} + ')'">Al Pacino</span>
             </div>
 			<a th:href="@{'/admin/updateDirectedMovies/' + ${artist.id}}">
