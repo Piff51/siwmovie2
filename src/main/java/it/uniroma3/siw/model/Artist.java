@@ -38,7 +38,7 @@ public class Artist {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfDeath;
 
-	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private Image profilePicture;;
 	
 	@ManyToMany(mappedBy="actors", fetch = FetchType.EAGER)
