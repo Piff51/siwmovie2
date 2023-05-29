@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,10 +41,10 @@ public class Artist {
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Image profilePicture;;
 	
-	@ManyToMany(mappedBy="actors")
+	@ManyToMany(mappedBy="actors", fetch = FetchType.EAGER)
 	private Set<Movie> starredMovies;
 	
-	@OneToMany(mappedBy="director")
+	@OneToMany(mappedBy="director", fetch = FetchType.EAGER)
 	private List<Movie> directedMovies;
 	
 	public Artist(){

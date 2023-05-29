@@ -3,7 +3,6 @@ package it.uniroma3.siw.controller;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.MovieRepository;
 import it.uniroma3.siw.repository.ReviewRepository;
 import it.uniroma3.siw.repository.UserRepository;
-import it.uniroma3.siw.service.MovieService;
 import it.uniroma3.siw.service.ReviewService;
 
 @Controller
@@ -34,8 +32,6 @@ public class ReviewController {
   private ReviewService reviewService;
   @Autowired
   private SessionData sessionData;
-  @Autowired
-  private MovieService movieService;
 
   @Transactional
   @PostMapping("/review")
