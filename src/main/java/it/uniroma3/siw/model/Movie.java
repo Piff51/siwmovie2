@@ -40,7 +40,7 @@ public class Movie {
     @OneToOne(cascade = CascadeType.REMOVE)
     private Image image;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
 	private List<Image> images;
 	
 	@ManyToOne()

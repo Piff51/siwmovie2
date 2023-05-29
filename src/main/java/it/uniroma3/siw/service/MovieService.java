@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import it.uniroma3.siw.controller.validator.ImageValidator;
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Movie;
@@ -24,6 +26,8 @@ public class MovieService {
     private MovieRepository movieRepository;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private ImageValidator imageValidator;
 
     @Transactional
     public Movie findMovie(Long id) {
@@ -110,8 +114,26 @@ public class MovieService {
     public Iterable<Movie> findMovieNotStarred(Long id) {
         return this.movieRepository.findMovieNotStarred(id);
     }
-    
 
-    
+    public void addImage(Movie movie, MultipartFile image) throws IOException{
+        if (this.imageValidator.isImage(image) || image.getSize() < ImageValidator.MAX_IMAGE_SIZE){
+            Image movieImg = new Image(image.getBytes());
+            this.imageRepository.save(movieImg);
 
+            movie.getImages().add(movieImg);
+            this.movieRepository.save(movie);
+        }
+    }
+
+    public void removeImage(Long movieId, Long imageId) {
+        Image image = this.imageRepository.findById(imageId).get();
+        Movie movie = this.findMovie(movieId);
+        movie.getImages().remove(image);
+        this.movieRepository.save(movie);
+    }
+    
 }
+
+    
+
+

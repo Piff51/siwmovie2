@@ -25,6 +25,15 @@
 		<div>
 			<span th:text="${movie.title}">Up!</span>
 			<span th:text="'(' + ${movie.year} + ')'">2000</span>
+			<div th:each="image : ${movie.images}">
+				<img th:src="@{'data:image/*;base64,'+${image.base64Image}}">
+				<a th:href="@{'/admin/removeImage/'+${movie.id}+'/'+${image.id}}">rimuovi immagine</a>
+			</div>
+			<form th:action="@{/admin/addImage}" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="movie" th:value="${movie.id}">
+				<input type="file" accept="image/*" name="file" required/>
+				<button type="submit">aggiungi immagine</button>
+			</form>
 		</div>
 		<div th:if="${movie.director}">
 			<span>Regista: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">Steven

@@ -24,6 +24,7 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.ArtistService;
 import it.uniroma3.siw.service.MovieService;
 import it.uniroma3.siw.service.ReviewService;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class MovieController {
@@ -184,5 +185,24 @@ public class MovieController {
 		model.addAttribute("movie", movie);
 		model.addAttribute("actorsToAdd", actorsToAdd);
 		return "admin/actorsToAdd.html";
+	}
+
+	@Transactional
+	@PostMapping(value = "/admin/addImage")
+	public String addImage(@RequestParam("file") MultipartFile image, @RequestParam("movie") Long movieId, Model model)
+			throws IOException {
+		Movie movie = this.movieService.findMovie(movieId);
+		this.movieService.addImage(movie, image);
+		model.addAttribute("movie", movie);
+		return "admin/formUpdateMovie.html";
+	}
+
+	@Transactional
+	@GetMapping(value = "/admin/removeImage/{movieId}/{imageId}")
+	public String removeImage(@PathVariable("movieId") Long movieId, @PathVariable("imageId") Long imageId,
+			Model model) {
+		this.movieService.removeImage(movieId, imageId);
+		model.addAttribute("movie", this.movieService.findMovie(movieId));
+		return "admin/formUpdateMovie.html";
 	}
 }

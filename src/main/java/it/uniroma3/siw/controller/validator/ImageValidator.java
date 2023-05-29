@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ImageValidator implements Validator {
-    private static final long MAX_IMAGE_SIZE = 500 * 1024; // 500 KB
+    public static final long MAX_IMAGE_SIZE = 500 * 1024; // 500 KB
 
     @Override
     public void validate(Object o, Errors errors) {
@@ -25,7 +25,7 @@ public class ImageValidator implements Validator {
         return MultipartFile.class.equals(aClass);
     }
 
-    private boolean isImage(MultipartFile file) {
+    public boolean isImage(MultipartFile file) {
         return file.getContentType().startsWith("image/");
     }
 }
