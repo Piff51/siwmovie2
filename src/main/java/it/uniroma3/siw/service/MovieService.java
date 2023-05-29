@@ -75,7 +75,6 @@ public class MovieService {
         Set<Artist> actors = movie.getActors();
         actors.add(actor);
         this.movieRepository.save(movie);
-
         return movie;
     }
 

@@ -43,7 +43,7 @@ public class Movie {
 	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Image> images;
 	
-	@ManyToOne
+	@ManyToOne()
 	private Artist director;
 	
 	@ManyToMany(fetch = FetchType.EAGER)

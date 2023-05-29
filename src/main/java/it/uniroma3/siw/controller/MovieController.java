@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import it.uniroma3.siw.controller.session.SessionData;
+import it.uniroma3.siw.controller.validator.ImageValidator;
 import it.uniroma3.siw.controller.validator.MovieValidator;
 import it.uniroma3.siw.model.Artist;
 import it.uniroma3.siw.model.Movie;
@@ -36,6 +37,8 @@ public class MovieController {
 	private ArtistService artistService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private ImageValidator imageValidator;
 
 	@Transactional
 	@GetMapping(value = "/admin/formNewMovie")
@@ -94,6 +97,7 @@ public class MovieController {
 	@PostMapping("/admin/movie")
 	public String newMovie(Model model, @Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult,
 			@RequestParam("file") MultipartFile image) throws IOException {
+		this.imageValidator.validate(image, bindingResult);
 		this.movieValidator.validate(movie, bindingResult);
 		if (!bindingResult.hasErrors()) {
 			this.movieService.saveMovie(movie, image);

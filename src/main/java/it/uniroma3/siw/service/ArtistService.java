@@ -82,15 +82,8 @@ public class ArtistService {
     public Artist addDirectedMovieToArtist(Long movieId, Long artistId) {
         Artist artist = this.findArtist(artistId);
         Movie movie = this.movieService.findMovie(movieId);
+        artist.getDirectedMovies().add(movie);
         movie.setDirector(artist);
-        this.movieRepository.save(movie);
-        return artist;
-    }
-    public Artist addStarredMovieToArtist(Long movieId, Long artistId) {
-        Artist artist = this.findArtist(artistId);
-        Movie movie = this.movieService.findMovie(movieId);
-        Set<Artist> artists = movie.getActors();
-        artists.add(artist);
         this.movieRepository.save(movie);
         return artist;
     }
@@ -98,17 +91,27 @@ public class ArtistService {
     public Artist removeDirectedMovieFromArtist(Long artistId, Long movieId) {
         Movie movie = this.movieService.findMovie(movieId);
         Artist artist = this.findArtist(artistId);
+        artist.getDirectedMovies().remove(movie);
         movie.setDirector(null);
         this.movieRepository.save(movie);
         return artist;
     }
+    public Artist addStarredMovieToArtist(Long movieId, Long artistId) {
+        Artist artist = this.findArtist(artistId);
+        Movie movie = this.movieService.findMovie(movieId);
+        artist.getStarredMovies().add(movie);
+        movie.getActors().add(artist);
+        this.artistRepository.save(artist);
+        return artist;
+    }
+   
     @Transactional
     public Artist removeStarredMovieFromArtist(Long artistId, Long movieId) {
         Movie movie = this.movieService.findMovie(movieId);
         Artist artist = this.findArtist(artistId);
-        Set<Artist> artists = movie.getActors();
-        artists.remove(artist);
-        this.movieRepository.save(movie);
+        artist.getStarredMovies().remove(movie);
+        movie.getActors().remove(artist);
+        this.artistRepository.save(artist);
         return artist;
     }
 
