@@ -1,68 +1,46 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<title>
-		SiwMovie - Registrazione
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siw Movie Register Page</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
-
 <body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-
-	<div>
-		<a href="/"><img src="/images/logo-siw.png" width="50%" /></a>
-	</div>
-	<h1>Registrazione nuovo utente</h1>
-	<form th:action="@{/register}" method="POST">
-		<div>
-			<label>Username</label>
-			<span>
-				<input type="text" placeholder="username" required th:field="${credentials.username}" />
-			</span>
-			<span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}"
+    <div class="header">
+		<nav>
+        <div class="logo">
+            <a href="/"><img src="images/logo.png"></a>
+        </div>
+    </nav>
+        <div class="containerRegister">
+            <h1>Registrati</h1>
+            <form class="form"  th:action="@{/register}" method="POST">
+                <input type="text" required th:field="${credentials.username}" placeholder="Username">
+				<span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}"
 				th:style="'color:red'">
 			</span>
-		</div>
-		<div>
-			<label>Password</label>
-			<span><input type="password" placeholder="password" required th:field="${credentials.password}" />
-			</span>
-			<span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"
+                <input type="password" placeholder="Password" required th:field="${credentials.password}">
+				<span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"
 				th:style="'color:red'">
 			</span>
-		</div>
-		<div>
-			<label>Nome</label>
-			<span><input type="text" placeholder="name" required th:field="${user.name}" /></span>
+			<input type="text" placeholder="Nome" required th:field="${user.name}" />
 			<span th:if="${#fields.hasErrors('user.name')}" th:errors="${user.name}" th:style="'color:red'">
 			</span>
-		</div>
-		<div>
-			<label>Cognome</label>
-			<span><input type="text" placeholder="surname" required th:field="${user.surname}" /></span>
+			<input type="text" placeholder="Cognome" required th:field="${user.surname}" />
 			<span th:if="${#fields.hasErrors('user.surname')}" th:errors="${user.surname}" th:style="'color:red'">
 			</span>
-		</div>
-		<div>
-			<label>Email</label>
-			<span><input type="text" placeholder="email" required th:field="${user.email}" /></span>
+			<input type="text" placeholder="Email" required th:field="${user.email}" />
 			<span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}" th:style="'color:red'">
 			</span>
-		</div>
-		<div>
-			<button type="submit">Registra</button>
-		</div>
-	</form>
+                <input type="submit" value="Registrati">
+			</form>
+            <div class="contentRegister">
+                <h2>Sei gi&agrave; registrato? <a th:href="@{/login}">Accedi</a> </h2> <br>
+            </div>
+        </div>
+    </div>
+  
 </body>
-
 </html>

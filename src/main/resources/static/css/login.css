@@ -1,0 +1,128 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #000;
+    color: #fff;
+}
+
+.header{
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/images/background.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 10px 8%;
+    position: relative;
+}
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+.logo img{
+    width: 350px;
+    cursor: pointer;
+    object-fit: contain;
+}
+
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin-top: 2%;
+    width: 440px;
+    height: 440px;
+    background-color: #000;
+}
+
+.containerRegister{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin-top: 2%;
+    width: 440px;
+    height: 570px;
+    background-color: #000;
+}
+
+h1{
+    color: #fff;
+    margin-top: 40px;
+    margin-left: 50px;
+}
+
+span{
+    position: absolute;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+input{
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 320px;
+    height: 47px;
+    background-color: #333;
+    border-radius: 3px;
+    border: none;
+    font-size: 20px;
+    color: white;
+    padding-left: 10px;
+}
+
+input::placeholder{
+    font-size: 17px;
+    margin-left: 15px;
+    padding: 12px;
+}
+
+input[type=submit]{
+    width: 320px;
+    height: 45px;
+    background-color: #31c48d;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+label{
+    color: rgb(125, 119, 119);
+}
+
+.form a{
+    float: right;
+    margin-top: 24px;
+    margin-right: 64px;
+    color: rgb(125, 119, 119);
+    text-decoration: none;
+}
+
+.content{
+    position: absolute;
+    margin-top: 80px;
+    font-size: 9px;
+    margin-left: 55px;
+}
+
+.contentRegister{
+    position: absolute;
+    margin-top: 30px;
+    font-size: 9px;
+    margin-left: 55px;
+}
+
+h2{
+    color: rgb(125, 119, 119);
+}
+a{
+    color: #fff;
+    text-decoration: none;
+}

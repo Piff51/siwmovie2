@@ -1,32 +1,34 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-	<title>
-		SiwMovie - Homepage
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
-</head>
-
-<body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-
-	<div><img src="/images/logo-siw.png" width="50%" /></div>
-	<h1>Consulta l'archivio</h1>
-	<div>
-		<a href="/movie">Elenco Film</a>
-	</div>
-	<div>
-		<a href="/artist">Elenco Artisti</a>
-	</div>
-</body>
-
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Siw Movie</title>
+        <link rel="stylesheet" href="/css/index.css" />
+    </head>
+    <body>
+        <div class="header">
+            <nav>
+                <img src="images/logo.png" class="logo">
+                <div th:if="${#request.userPrincipal}">
+                   
+                </div>
+                <div th:unless="${#request.userPrincipal}">
+                    <a href="/login"><button>Accedi</button></a>
+                    <a href="/register"><button>Iscriviti</button></a>
+                </div>
+            </nav>
+            <div class="header-content">
+                <h1>SIW MOVIE 2</h1>
+                <h1>La Vendetta</h1>
+                <h3>La tua destinazione per tutto ci&ograve; che riguarda i film.</h3>
+                <p>Esplora il database e immergiti nel magico mondo del cinema</p>
+                <div class="buttons">
+                    <a href="/movie"><button type="button">Film</button></a>
+                    <a href="/artist"><button type="button">Attori</button></a>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
