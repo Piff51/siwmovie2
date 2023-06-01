@@ -1,51 +1,45 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<title>
-		New Movie
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Sign in Page</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
-
 <body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
-	<h1>Aggiungi un film</h1>
-	<form th:action="@{/admin/movie}" method="POST" th:object="${movie}" enctype="multipart/form-data">
-  		<div th:if="${#fields.hasGlobalErrors()}">
-  			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-  		</div>
-		
-		<div>
-			<label>Titolo:</label> 
-			<span><input type="text" th:field="${movie.title}" /></span>
-		    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
-		    </span>
-		</div>
-
-		<div>
-			<label>Anno:</label> <span><input type="text" th:field="${movie.year}" /></span>
-		    <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}">
-		    </span>
-		</div>
-
-		<div>
-			<label>immagine:</label> <span><input type="file" accept="image/*" name="file" required /></span>
-		</div>
-		
-		<div>
-			<span><button type="submit">Conferma</button></span>
-		</div>
-	</form>
+    <div class="header">
+	
+		<nav>
+			<a href="/"><img src="/images/logo.png" class="loghetto"></a>
+		   <div th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout"><button>Disconnetti</button></a>
+			</div>
+			<div th:unless="${#request.userPrincipal}">
+				<a href="/login"><button>Accedi</button></a>
+				<a href="/register"><button>Iscriviti</button></a>
+			</div>
+		</nav>
+    
+        <div class="container">
+            <h1>Nuovo Film</h1>
+			
+            <form class="form"th:action="@{/admin/movie}" method="POST" th:object="${movie}" enctype="multipart/form-data">
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+				</div>
+                <input type="text" th:field="${movie.title}" required placeholder="Titolo">
+				<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+				</span>
+                <input  type="text" th:field="${movie.year}" required placeholder="Anno">
+				<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}">
+				</span>
+                <input type="file" accept="image/*" name="file" required placeholder="Locandina">
+                <input type="submit" value="Conferma">
+			</form>
+        </div>
+    </div>
+  
 </body>
-
 </html>

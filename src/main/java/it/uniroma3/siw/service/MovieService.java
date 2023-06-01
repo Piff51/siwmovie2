@@ -101,7 +101,9 @@ public class MovieService {
         for (Artist artist : movie.getActors()) {
             artist.getStarredMovies().remove(movie);
         }
-        movie.getDirector().getDirectedMovies().remove(movie);
+        if(movie.getDirector()!=null){
+            movie.getDirector().getDirectedMovies().remove(movie);
+        }
         this.movieRepository.delete(movie);
     }
 

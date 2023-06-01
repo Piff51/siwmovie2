@@ -15,15 +15,39 @@ body{
     background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/images/background.jpg);
     background-size: cover;
     background-position: center;
-    padding: 10px 8%;
+    padding: 20px 3%;
     position: relative;
 }
 nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 0px 0;
 }
+
+.loghetto{
+    width: 350px;
+    cursor: pointer;
+    object-fit: contain;
+}
+
+nav button{
+    border: 0;
+    outline: 0;
+    background: #31c48d;
+    color: #fff;
+    padding: 7px 20px;
+    font-size: 12px;
+    border-radius: 4px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+nav button:hover{
+    color: #000;
+    background-color: #31c48d;
+    transition: all 0.2s;
+}
+
 .logo img{
     width: 350px;
     cursor: pointer;
@@ -58,7 +82,7 @@ h1{
     margin-left: 50px;
 }
 
-span{
+.form span{
     position: absolute;
     margin-top: 30px;
     margin-left: 50px;
@@ -92,6 +116,13 @@ input[type=submit]{
     cursor: pointer;
     margin-top: 40px;
 }
+
+input[type=file]{
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
 
 label{
     color: rgb(125, 119, 119);
