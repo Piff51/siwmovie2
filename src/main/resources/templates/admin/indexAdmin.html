@@ -12,6 +12,7 @@
 			<nav>
 				<img src="images/logo.png" class="logo">
 				<div th:if="${#request.userPrincipal}">
+					<span th:text="${#request.userPrincipal.principal.username}"></span>
 					<a href="/logout"><button>Disconnetti</button></a>
 				</div>
 				<div th:unless="${#request.userPrincipal}">

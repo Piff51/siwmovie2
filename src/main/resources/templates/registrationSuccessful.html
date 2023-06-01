@@ -1,37 +1,30 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-	<title>SiwMovie - Registrazione conclusa</title>
-	<link rel="stylesheet" href="/css/stile.css" />
-</head>
-
-<body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Siw Movie</title>
+        <link rel="stylesheet" href="/css/index.css" />
+    </head>
+    <body>
+        <div class="header">
+            <nav>
+                <a href="/"><img src="images/logo.png" class="logo"></a>
+            </nav>
+			<div class="container">
+            <div class="header-content">
+                <h2>Congratulazioni ti sei registrato!</h2>
+					<h3></h3>
+                    <h3 th:text="'Nome: ' +${user.name}"></h3>
+                    <h3 th:text="'Cognome: ' +${user.surname}"></h3>
+                    <h3 th:text="'Email: ' +${user.name}"></h3>
+					<div class="buttons">
+						<a href="/login"><button type="button">Accedi</button></a>
+					</div>
+					
+            </div>
 		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-
-	<div>
-		<a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
-	</div>
-	<h1>Congratulazioni ti sei registrato!</h1>
-	<div>
-		<span>Nome: </span>
-		<span th:text="${user.name}"></span>
-	</div>
-	<div>
-		<span>Cognome: </span>
-		<span th:text="${user.surname}"></span>
-	</div>
-	<div>
-		<span>Email: </span>
-		<span th:text="${user.email}"></span>
-	</div>
-</body>
+        </div>
+    </body>
 </html>
