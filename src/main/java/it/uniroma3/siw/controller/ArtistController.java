@@ -60,6 +60,7 @@ public class ArtistController {
 	@GetMapping("/artist/{id}")
 	public String getArtist(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("artist", this.artistService.findArtist(id));
+		model.addAttribute("directedMovies", this.artistService.findDirectedMovies(id));
 		return "artist.html";
 	}
 

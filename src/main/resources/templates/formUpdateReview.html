@@ -1,39 +1,98 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Film</title>
-	<link rel="stylesheet" href="/css/stile.css" />
-</head>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Siw Movie</title>
+		<link rel="stylesheet" href="/css/movie.css">
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body>
+		<div class="header">
+			<nav>
+				<a href="/"><img src="/images/logo.png" class="logo"></a>
+				<div th:if="${#request.userPrincipal}">
+					<span th:text="${#request.userPrincipal.principal.username}"></span>
+					<a href="/logout"><button>Disconnetti</button></a>
+				</div>
+				<div th:unless="${#request.userPrincipal}">
+					<a href="/login"><button>Accedi</button></a>
+					<a href="/register"><button>Iscriviti</button></a>
+				</div>
+			</nav>
+			<div class="movie-details">
+				<img th:src="@{'data:image/*;base64,'+${movie.image.base64Image}}"
+					alt="Movie Poster"
+					class="movie-poster">
+				<div class="movie-info">
+					<h1 th:text="'Titolo: '+${movie.title}" class="movie-title">Titolo</h1>
+					<p th:text="'Anno: '+${movie.year}" class="movie-year">Anno: 2023</p>
+					<p th:if="${movie.director}"
+						th:text="'Direttore: '+${movie.director.name}+ ' '+ ${movie.director.surname}"
+						class="movie-director">Director: Director
+						Name</p>
+					<p th:if="${!movie.actors.isEmpty()}"class="movie-actors"> <span>Attori: </span><span
+							th:each="actor:${movie.actors}"
+							th:text="${actor.name} + ' '+ ${actor.surname}+'; '">Attori: Actor 1,
+							Actor 2,
+							Actor 3</span></p>
+					
+					<div th:if="${#request.userPrincipal!= null &&  userReview != null}"
+						class="container">
+						<h1>Modifica</h1>
+						<form th:action="@{/updateReview}" method="post"class="form">
+							<input type="number" name="rating" th:value="${userReview.rating}">
+							<input type="text" name="title" th:value="${userReview.title}">
+							<input type="text" name="comment" th:value="${userReview.comment}">
+							<input type="hidden" name="review" th:value="${userReview.id}">
+							<input type="submit" value="Modifica">
+						</form>
+					</div>
 
-<body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
+				</div>
+				<div class="row">
+					<div class="row__posters">
+						<img th:each="image :${movie.images} "
+							th:src="@{'data:image/*;base64,'+${image.base64Image}}" alt
+							class="row__poster">
 
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
-    <h1>Dettagli Film</h1>
-    <div th:if="${movie}">
-        <span th:text="${movie.title}">Up!</span>
-        <span th:text="'(' + ${movie.year} + ')'">2000</span>
-        <span><img th:src="@{'data:image/*;base64,'+${movie.image.base64Image}}"></span>
-    </div>
-	<div th:if="${#request.userPrincipal}">
-		<div th:if="${userReview}">
-            <form th:action="@{/updateReview}" method="post">
-			<div>Voto: <input type="number" name="rating" th:value="${userReview.rating}"></div>
-			<div>Titolo: <input type="text" name="title" th:value="${userReview.title}"></div>
-			<div>Commento: <input type="text" name="comment" th:value="${userReview.comment}"></div>
-            <input type="hidden" name="review" th:value="${userReview.id}">
-            <button type="submit">Modifica</button>
-        </form>
+					</div>
+					<i class="fas fa-chevron-left arrowLeft"></i>
+					<i class="fas fa-chevron-right arrow"></i>
+				</div>
+
+			</div>
 		</div>
-	</div>
-    <div th:unless="${movie}">Non esiste</div>
-  </body>
+		<div th:unless="${movie}">Non esiste</div>
+	</body>
+	<script>
+		const arrowRight = document.querySelectorAll(".fa-chevron-right");
+	 const arrowLeft = document.querySelectorAll(".fa-chevron-left");
+	 const postersContainer = document.querySelectorAll(".row__posters");
+	 
+	 arrowRight.forEach((arrow,index) => {
+		 arrow.addEventListener("click", () => {
+			 postersContainer[index].scrollBy({
+				 top: 0,
+				 left: 300,
+				 behavior: "smooth"
+			 });
+		 });
+	 });
+	 
+	 arrowLeft.forEach((arrow,index) => {
+		 arrow.addEventListener("click", () => {
+			 postersContainer[index].scrollBy({
+				 top: 0,
+				 left: -300,
+				 behavior: "smooth"
+			 });
+		 });
+	 });
+	 
+	 </script>
 </html>
