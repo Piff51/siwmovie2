@@ -43,10 +43,12 @@ nav{
     transition: transform 450ms;
 }
 
-.row__posters a{
+.row__posters__a{
     min-height: 250px;
     min-width: 200px;
 }
+
+
 
 .row__posters {
     display: flex;
@@ -173,8 +175,12 @@ h2{
     text-align: center;
     font-size: 13px;
 }
-
-.row__posters__a{
-    min-height: 250px;
-    min-width: 200px;
+h2 a{
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    text-decoration: underline;
 }
+
+
+

@@ -1,42 +1,54 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-	<title>Scelta film</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Siw Movie</title>
+	<link rel="stylesheet" href="/css/toAdd.css" />
 </head>
 
 <body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
-    <h1 th:text="'Film recitati da ' + ${artist.name}"></h1>
-	<div th:if="${artist.starredMovies.isEmpty()}">Non ci sono film diretti da questo attore</div>
-	<ul>
-		<li th:each="movie : ${artist.starredMovies}">
-			<span th:text="${movie.title}+' ('+${movie.year}+')'"></span>
-			<a th:href="@{'/admin/removeStarredMovieFromArtist/'+ ${artist.id}+'/'+${movie.id}}">Cancella</a>
-		</li>
-	</ul>
-	<div>
-		Film che si possono aggiungere:
-		<ul>
-			<li th:each="movie : ${starredMoviesToAdd}">
-				<span th:text="${movie.title}+' ('+${movie.year}+')'"></span>
-				<a th:href="@{'/admin/addStarredMovieToArtist/'+ ${artist.id}+'/'+${movie.id}}">Aggiungi</a>
-			</li>
-		</ul>
-	<div>
-	<div>
-		<a th:href="@{'/admin/formUpdateArtist/'+ ${artist.id}}"><button type="button">Fine</button></a>
-	</div>
+	<div class="header">
+		<nav>
+			<img src="/images/logo.png" class="logo">
+			<div th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout"><button>Disconnetti</button></a>
+			</div>
+			<div th:unless="${#request.userPrincipal}">
+				<a href="/login"><button>Accedi</button></a>
+				<a href="/register"><button>Iscriviti</button></a>
+			</div>
+		</nav>
+		<div class="directed">
+			<div class="toadd">
+				<h1 th:text="'Film recitati da ' + ${artist.name}"></h1>
+				<div th:if="${artist.starredMovies.isEmpty()}">Non ci sono film recitati da questo attore</div>
+				<ul>
+					<li th:each="movie : ${artist.starredMovies}">
+						<span th:text="${movie.title}+' ('+${movie.year}+')'"></span>
+						<a th:href="@{'/admin/removeStarredMovieFromArtist/'+ ${artist.id}+'/'+${movie.id}}">Cancella</a>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<h1>Film che si possono aggiungere:</h1>
+				<ul>
+					<li th:each="movie : ${starredMoviesToAdd}">
+						<span th:text="${movie.title}+' ('+${movie.year}+')'"></span>
+						<a th:href="@{'/admin/addStarredMovieToArtist/'+ ${artist.id}+'/'+${movie.id}}">Aggiungi</a>
+					</li>
+				</ul>
+				<div>
+					<div>
+						<a th:href="@{'/admin/formUpdateArtist/'+ ${artist.id}}"><button type="button">Fine</button></a>
+					</div>
+				</div>
+			</div>
+
 </body>
 
 </html>

@@ -156,6 +156,18 @@ input {
     color: white;
     padding-left: 10px;
 }
+.input2 {
+    margin-left: 0px;
+    margin-top: 20px;
+    width: 250px;
+    height: 43px;
+    background-color: #333;
+    border-radius: 3px;
+    border: none;
+    font-size: 15px;
+    color: white;
+    padding-left: 10px;
+}
 
 textarea {
     margin-left: 15px;
@@ -202,10 +214,16 @@ h2 {
     margin-bottom:15px;
     width: 100%;
     object-fit: contain;
-    max-height: 400px;
+    max-height: 250px;
     margin-right: 10px;
     transition: transform 450ms;
 }
+
+.row__posters__a{
+    min-height: 250px;
+    min-width: 200px;
+}
+
 
 
 .row__posters {
@@ -215,6 +233,13 @@ h2 {
     overflow-x: auto;
     cursor: pointer;
 }
+
+.row__poster:hover{
+    transform: scale(1.09);
+}
+
+
+
 
 .row{
     margin-left: 20%;
@@ -242,4 +267,16 @@ h2 {
     top: -200px;
     left: -30px;
     color: lightgrey;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+h2 a{
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    text-decoration: underline;
 }

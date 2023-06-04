@@ -1,68 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-	<title>
-		New Movie
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Siw Movie</title>
+	<link rel="stylesheet" href="/css/movie.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
-	<h1>Aggiorna film</h1>
-	<div th:if="${movie}">
-		<div>
-			<span th:text="${movie.title}">Up!</span>
-			<span th:text="'(' + ${movie.year} + ')'">2000</span>
-			<div th:each="image : ${movie.images}">
-				<img th:src="@{'data:image/*;base64,'+${image.base64Image}}">
-				<a th:href="@{'/admin/removeImage/'+${movie.id}+'/'+${image.id}}">rimuovi immagine</a>
+	<div class="header">
+		<nav>
+			<a href="/"><img src="/images/logo.png" class="logo"></a>
+			<div th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout"><button>Disconnetti</button></a>
 			</div>
-			<form th:action="@{/admin/addImage}" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="movie" th:value="${movie.id}">
-				<input type="file" accept="image/*" name="file" required/>
-				<button type="submit">aggiungi immagine</button>
-			</form>
-		</div>
-		<div th:if="${movie.director}">
-			<span>Regista: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">Steven
-				Spielberg</span>
-			<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Modifica regista</a></span>
-		</div>
-		<div th:unless="${movie.director}">
-			<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Aggiungi regista</a>
+			<div th:unless="${#request.userPrincipal}">
+				<a href="/login"><button>Accedi</button></a>
+				<a href="/register"><button>Iscriviti</button></a>
+			</div>
+		</nav>
+		<div class="movie-details">
+			<img th:src="@{'data:image/*;base64,'+${movie.image.base64Image}}" alt="Movie Poster" class="movie-poster">
+			<div class="movie-info">
+				<h1 th:text="'Titolo: '+${movie.title}" class="movie-title">Titolo</h1>
+				<p th:text="'Anno: '+${movie.year}" class="movie-year">Anno: 2023</p>
+				<p>Direttore:
+					<span th:if="${movie.director}" th:text="${movie.director.name}+ ' '+ ${movie.director.surname}"
+						class="movie-director">Director: Director
+						Name</span>
+					<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Modifica</a>
+				</p>
+
+				<span>Attori: 
+					<span class="movie-actors" th:each="actor:${movie.actors}"
+						th:text="${actor.name} + ' '+ ${actor.surname}+'; '">Attori: Actor 1,
+						Actor 2,
+						Actor 3</span>
+					<a th:href="@{'/admin/updateActors/' + ${movie.id}}">
+						Modifica
+					</a>
+				</span>
+				<form th:action="@{/admin/addImage}" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="movie" th:value="${movie.id}">
+					<div>
+						<input class = "input2" type="file" accept="image/*" name="file" required/>
+
+					</div>
+					<input class = "input2" type="submit" value="Aggiungi imamgine"></input>
+				</form>
+
+
+			</div>
+			<div class="row" th:if="${!movie.images.isEmpty()}">
+				<div class="row__posters">
+					<div class="row__posters__a" th:each="image :${movie.images} ">
+							<img th:src="@{'data:image/*;base64,'+${image.base64Image}}" alt class="row__poster">
+						
+						<h2>
+							<a th:href="@{'/admin/removeImage/'+${movie.id}+'/'+${image.id}}">Rimuovi Immagine</a>
+						</h2>
+					</div>
+				</div>
+				<i class="fas fa-chevron-left arrowLeft"></i>
+				<i class="fas fa-chevron-right arrow"></i>
+			</div>
+
 		</div>
 
-		<div>
-			<span>Attori: </span>
-			<div th:each="actor: ${movie.actors}">
-				<span th:text="${actor.name} + ' ' + ${actor.surname}">Al Pacino</span>
-			</div>
-			<a th:href="@{'/admin/updateActors/' + ${movie.id}}">
-				<button type="button">Modifica</button>
-			</a>
-		</div>
-		<div th:if="${movie.reviews != null && !movie.reviews.isEmpty()}">
-			<ul th:each="review : ${movie.reviews}">
-				<span th:text="'Autore: ' + ${review.user.name}"></span>
-				<li th:text="'Voto: '+${review.rating}"></li>
-				<li th:text="'Titolo: '+${review.title}"></li>
-				<li th:text="'Commento: '+${review.comment}"></li>
-				<a th:href="@{'/admin/deleteReview'+'/'+${review.id}}">rimuovi Recensione</a>
+		<div th:if="${movie.reviews != null && !movie.reviews.isEmpty()}" class="movie-reviews">
+			<h2>Recensioni</h2>
+			<ul class="review-list">
+				<li th:each="review : ${movie.reviews}" class="review">
+					<div class="review-box">
+						<div th:text="'Autore: ' + ${review.user.name}" class="author">Nome dell'autore</div>
+						<div class="rating">
+							<span th:each="star : ${#numbers.sequence(1, review.rating)}"
+								class="fa fa-star star"></span>
+
+						</div>
+						<h1 th:text="${review.title}" class="title">Titolo</h1>
+						<h2 th:text="${review.comment}" class="comment-title">commento
+							molto molto lungo
+							che fa rifletter e amsd ad sa'jfae0ifjaegfafsgfdsi
+							dfijsd
+						</h2>
+						<a th:href="@{'/admin/deleteReview'+'/'+${review.id}}">Rimuovi Recensione</a>
+					</div>
+				</li>
 			</ul>
 		</div>
-		<div th:unless="${movie}">Film non esistente</div>
+	</div>
+	<div th:unless="${movie}">Non esiste</div>
 </body>
+<script>
+	const arrowRight = document.querySelectorAll(".fa-chevron-right");
+	const arrowLeft = document.querySelectorAll(".fa-chevron-left");
+	const postersContainer = document.querySelectorAll(".row__posters");
+
+	arrowRight.forEach((arrow, index) => {
+		arrow.addEventListener("click", () => {
+			postersContainer[index].scrollBy({
+				top: 0,
+				left: 300,
+				behavior: "smooth"
+			});
+		});
+	});
+
+	arrowLeft.forEach((arrow, index) => {
+		arrow.addEventListener("click", () => {
+			postersContainer[index].scrollBy({
+				top: 0,
+				left: -300,
+				behavior: "smooth"
+			});
+		});
+	});
+
+</script>
 
 </html>
