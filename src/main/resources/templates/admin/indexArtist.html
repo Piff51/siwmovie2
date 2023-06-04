@@ -1,29 +1,35 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>
-			SiwMovie - Gestione Artisti
-		</title>
-		<link rel="stylesheet" href="/css/stile.css" />
-	</head>
-<body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
 
-		<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
-		<h1>Gestione Artisti</h1>
-		<div>
-			<a href="/admin/formNewArtist">Inserisci i dati di un artista</a>
-		</div>
-		<div>
-			<a href="/admin/manageArtists">Gestisci gli artisti</a>
-		</div>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Siw Movie</title>
+        <link rel="stylesheet" href="/css/index.css" />
+    </head>
+    <body>
+        <div class="header">
+            <nav>
+				<a href="/"><img src="/images/logo.png" class="logo"></a>
+               <div th:if="${#request.userPrincipal}">
+                    <span th:text="${#request.userPrincipal.principal.username}"></span>
+                    <a href="/logout"><button>Disconnetti</button></a>
+                </div>
+                <div th:unless="${#request.userPrincipal}">
+                    <a href="/login"><button>Accedi</button></a>
+                    <a href="/register"><button>Iscriviti</button></a>
+                </div>
+            </nav>
+            <div class="header-content">
+                <h1>Gestione Artisti</h1>
+               
+                <div class="buttons">
+                    <a href="/admin/formNewArtist"><button type="button">Nuovo artista</button></a>
+                    <a href="/admin/manageArtists"><button type="button">Gestisci Artisti</button></a>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
+

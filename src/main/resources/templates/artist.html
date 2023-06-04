@@ -31,12 +31,14 @@
 					class="movie-poster">
 				<div class="movie-info">
 					<h1 th:text="${artist.name}+' '+${artist.surname}" class="movie-title">Titolo</h1>
-					<p th:if="${directedMovies}"class="movie-actors"> <span>Film Diretti: </span><span
+					<p th:if ="${artist.dateOfBirth!=null}" th:text="'Data di nascita: '+${artist.dateOfBirth}" class="movie-year">Anno: 2023</p>
+					<p  th:if ="${artist.dateOfBirth!=null}" th:text="'Data di nascita: '+${artist.dateOfDeath}" class="movie-year">Anno: 2023</p>
+					<p th:if="${!directedMovies.isEmpty()}"class="movie-actors"> <span>Film Diretti: </span><span
 							th:each="movie:${directedMovies}"
 							th:text="${movie.title} + ' ('+ ${movie.year}+'); '">Attori: Actor 1,
 							Actor 2,
 							Actor 3</span></p>
-					<p class="movie-actors"> <span>Film Recitati: </span><span
+					<p  th:if="${starredMovies}" class="movie-actors"> <span>Film Recitati: </span><span
 							th:each="movie:${artist.starredMovies}"
 							th:text="${movie.title} + ' ('+ ${movie.year}+'); '">Attori: Actor 1,
 							Actor 2,

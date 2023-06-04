@@ -24,10 +24,9 @@
 					<a href="/register"><button>Iscriviti</button></a>
 				</div>
 			</nav>
-			
-				<h1>Elenco Artisti</h1>
-			
+			<h1>Elenco Artisti</h1>
 			<div th:if="${artists==null || artists.isEmpty()}">Non ci sono artisti nel sistema</div>
+			<div th:unless="${artists==null || artists.isEmpty()}">
 			<div class="row">
 				<div class="row__posters">
 					<a th:each="artist : ${artists}" th:href="@{'/artist' + '/' + ${artist.id}}"><div>
@@ -39,6 +38,7 @@
 				<i class="fas fa-chevron-left arrowLeft"></i>
 				<i class="fas fa-chevron-right arrow"></i>
 			</div>
+		</div>
 			
 		</div>
 		

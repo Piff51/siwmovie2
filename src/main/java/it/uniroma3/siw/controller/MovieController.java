@@ -24,7 +24,6 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.ArtistService;
 import it.uniroma3.siw.service.MovieService;
 import it.uniroma3.siw.service.ReviewService;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class MovieController {

@@ -1,57 +1,51 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<title>
-		New Artist
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siw Movie</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
-
 <body>
-	<header>
-		<div th:if="${#request.userPrincipal}">
-			<span th:text="${#request.userPrincipal.principal.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${#request.userPrincipal}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
-	<h1>Aggiungi un artista</h1>
-	<form th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-		</div>
-		
-		<div>
-			<label>Nome:</label> <span><input required type="text" th:field="${artist.name}" /></span>
-			<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-		</div>
-
-		<div>
-			<label>Cognome:</label> <span><input required type="text" th:field="${artist.surname}" /></span>
-			<span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
-		</div>
-
-		<div>
-			<label>Data di nascita:</label> <span><input type="date" th:field="${artist.dateOfBirth}" /></span>
-		</div>
-
-		<div>
-			<label>Data di Morte:</label> <span><input type="date" th:field="${artist.dateOfDeath}" /></span>
-		</div>
-
-		<div>
-			<label>immagine di Profilo:</label> <span><input type="file" accept="image/*" name="file" required /></span>
-		</div>
-		
-		<div>
-			<span><button type="submit">Conferma</button></span>
-		</div>
-	</form>
+    <div class="header">
+	
+		<nav>
+			<a href="/"><img src="/images/logo.png" class="loghetto"></a>
+		   <div th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout"><button>Disconnetti</button></a>
+			</div>
+			<div th:unless="${#request.userPrincipal}">
+				<a href="/login"><button>Accedi</button></a>
+				<a href="/register"><button>Iscriviti</button></a>
+			</div>
+		</nav>
+    
+        <div class="containerRegister">
+            <h1>Nuovo Artista</h1>
+			
+            <form class="form" th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+				</div>
+                <input type="text" th:field="${artist.name}" required placeholder="Nome">
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+				</span>
+                <input  type="text" th:field="${artist.surname}" required placeholder="Cognome">
+				<span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">
+				</span>
+                <input  type="date" th:field="${artist.dateOfBirth}" required placeholder="Data di nascita">
+				<span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{surname}">
+				</span>
+                <input  type="date" th:field="${artist.dateOfDeath}" required placeholder="Data di morte">
+				<span th:if="${#fields.hasErrors('dateOfDeath')}" th:errors="*{surname}">
+				</span>
+                <input type="file" accept="image/*" name="file" required placeholder="Immagine Profilo">
+                <input type="submit" value="Conferma">
+			</form>
+        </div>
+    </div>
+  
 </body>
-
 </html>
