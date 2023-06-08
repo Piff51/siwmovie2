@@ -74,7 +74,7 @@
 					</div>
 
 				</div>
-				<div class="row" th:if="!movie.images.isEmpty()">
+				<div class="row" th:if="${!movie.images.isEmpty()}">
 					<div class="row__posters">
 						<img th:each="image :${movie.images} "
 							th:src="@{'data:image/*;base64,'+${image.base64Image}}" alt

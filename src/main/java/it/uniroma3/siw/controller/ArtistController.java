@@ -29,20 +29,20 @@ public class ArtistController {
 	@Autowired
 	private ArtistService artistService;
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/formNewArtist")
 	public String formNewArtist(Model model) {
 		model.addAttribute("artist", new Artist());
 		return "admin/formNewArtist.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/indexArtist")
 	public String indexArtist() {
 		return "admin/indexArtist.html";
 	}
 
-	@Transactional
+	
 	@PostMapping("/admin/artist")
 	public String newArtist(Model model, @Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult,
 			@RequestParam("file") MultipartFile image) throws IOException {
@@ -56,7 +56,7 @@ public class ArtistController {
 		}
 	}
 
-	@Transactional
+	
 	@GetMapping("/artist/{id}")
 	public String getArtist(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("artist", this.artistService.findArtist(id));
@@ -64,21 +64,21 @@ public class ArtistController {
 		return "artist.html";
 	}
 
-	@Transactional
+	
 	@GetMapping("/artist")
 	public String getArtists(Model model) {
 		model.addAttribute("artists", this.artistService.findAllArtists());
 		return "artists.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/manageArtists")
 	public String manageArtists(Model model) {
 		model.addAttribute("artists", this.artistService.findAllArtists());
 		return "admin/manageArtists.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/DeleteArtist/{id}")
 	public String deleteArtist(@PathVariable("id") Long id, Model model) {
 		this.artistService.deleteArtist(id);
@@ -86,7 +86,7 @@ public class ArtistController {
 		return "admin/manageArtists.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/formUpdateArtist/{id}")
 	public String formUpdateArtist(@PathVariable("id") Long id, Model model) {
 		Artist artist = this.artistService.findArtist(id);
@@ -96,7 +96,7 @@ public class ArtistController {
 		return "admin/formUpdateArtist.html";
 	}
 
-	@Transactional
+	
 	@GetMapping("/admin/updateDirectedMovies/{id}")
 	public String updateDirectedMovies(@PathVariable("id") Long id, Model model) {
 		List<Movie> movieToAdd = this.artistService.directedMovieToAdd(id);
@@ -107,7 +107,7 @@ public class ArtistController {
 		return "admin/directedMoviesToAdd.html";
 	}
 
-	@Transactional
+	
 	@GetMapping("/admin/updateStarredMovies/{id}")
 	public String updateStarredMovies(@PathVariable("id") Long id, Model model) {
 		List<Movie> movieToAdd = this.artistService.starredMovieToAdd(id);
@@ -116,7 +116,7 @@ public class ArtistController {
 		return "admin/starredMoviesToAdd.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/addDirectedMovieToArtist/{artistId}/{movieId}")
 	public String addDirectedMovieToArtist(@PathVariable("artistId") Long artistId,
 			@PathVariable("movieId") Long movieId,
@@ -129,7 +129,7 @@ public class ArtistController {
 		return "admin/directedMoviesToAdd.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/addStarredMovieToArtist/{artistId}/{movieId}")
 	public String addStarredMovieToArtist(@PathVariable("artistId") Long artistId,
 			@PathVariable("movieId") Long movieId,
@@ -141,7 +141,7 @@ public class ArtistController {
 		return "admin/starredMoviesToAdd.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/removeDirectedMovieFromArtist/{artistId}/{movieId}")
 	public String removeDirectedMovieFromArtist(@PathVariable("artistId") Long artistId,
 			@PathVariable("movieId") Long movieId,
@@ -154,7 +154,7 @@ public class ArtistController {
 		return "admin/directedMoviesToAdd.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/removeStarredMovieFromArtist/{artistId}/{movieId}")
 	public String removeStarredMovieFromArtist(@PathVariable("artistId") Long artistId,
 			@PathVariable("movieId") Long movieId,

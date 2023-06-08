@@ -40,14 +40,14 @@ public class MovieController {
 	@Autowired
 	private ImageValidator imageValidator;
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/formNewMovie")
 	public String formNewMovie(Model model) {
 		model.addAttribute("movie", new Movie());
 		return "admin/formNewMovie.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/formUpdateMovie/{id}")
 	public String formUpdateMovie(@PathVariable("id") Long id, Model model) {
 		Movie movie = this.movieService.findMovie(id);
@@ -55,7 +55,7 @@ public class MovieController {
 		return "admin/formUpdateMovie.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/DeleteMovie/{id}")
 	public String deleteMovie(@PathVariable("id") Long id, Model model) {
 		this.movieService.deleteMovie(id);
@@ -63,20 +63,20 @@ public class MovieController {
 		return "admin/manageMovies.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/indexMovie")
 	public String indexMovie() {
 		return "admin/indexMovie.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/manageMovies")
 	public String manageMovies(Model model) {
 		model.addAttribute("movies", this.movieService.findAllMovies());
 		return "admin/manageMovies.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/setDirectorToMovie/{directorId}/{movieId}")
 	public String setDirectorToMovie(@PathVariable("directorId") Long directorId, @PathVariable("movieId") Long movieId,
 			Model model) {
@@ -85,7 +85,7 @@ public class MovieController {
 		return "admin/formUpdateMovie.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/addDirector/{id}")
 	public String addDirector(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("artists", this.artistService.findAllArtists());
@@ -93,7 +93,7 @@ public class MovieController {
 		return "admin/directorsToAdd.html";
 	}
 
-	@Transactional
+	
 	@PostMapping("/admin/movie")
 	public String newMovie(Model model, @Valid @ModelAttribute("movie") Movie movie, BindingResult bindingResult,
 			@RequestParam("file") MultipartFile image) throws IOException {
@@ -108,7 +108,7 @@ public class MovieController {
 		}
 	}
 
-	@Transactional
+	
 	@GetMapping("/movie/{id}")
 	public String getMovie(@PathVariable("id") Long id, Model model) {
 		Movie movie = this.movieService.findMovie(id);
@@ -128,34 +128,34 @@ public class MovieController {
 		}
 	}
 
-	@Transactional
+	
 	@GetMapping("/movie")
 	public String getMovies(Model model) {
 		model.addAttribute("movies", this.movieService.findAllMovies());
 		return "movies.html";
 	}
 
-	@Transactional
+	
 	@GetMapping("/formSearchMovies")
 	public String formSearchMovies() {
 		return "formSearchMovies.html";
 	}
 
-	@Transactional
+	
 	@PostMapping("/searchMovies")
 	public String searchMovies(Model model, @RequestParam int year) {
 		model.addAttribute("movies", this.movieService.findMovieByYear(year));
 		return "foundMovies.html";
 	}
 
-	@Transactional
+	
 	@PostMapping("/searchMoviesByTitle")
 	public String searchMoviesByTitle(Model model, @RequestParam String title) {
 		model.addAttribute("movies", this.movieService.findMovieByTitle(title));
 		return "foundMovies.html";
 	}
 
-	@Transactional
+	
 	@GetMapping("/admin/updateActors/{id}")
 	public String updateActors(@PathVariable("id") Long id, Model model) {
 		List<Artist> actorsToAdd = this.movieService.actorsToAdd(id);
@@ -164,7 +164,7 @@ public class MovieController {
 		return "admin/actorsToAdd.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/addActorToMovie/{actorId}/{movieId}")
 	public String addActorToMovie(@PathVariable("actorId") Long actorId, @PathVariable("movieId") Long movieId,
 			Model model) {
@@ -175,7 +175,7 @@ public class MovieController {
 		return "admin/actorsToAdd.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/removeActorFromMovie/{actorId}/{movieId}")
 	public String removeActorFromMovie(@PathVariable("actorId") Long actorId, @PathVariable("movieId") Long movieId,
 			Model model) {
@@ -186,7 +186,7 @@ public class MovieController {
 		return "admin/actorsToAdd.html";
 	}
 
-	@Transactional
+	
 	@PostMapping(value = "/admin/addImage")
 	public String addImage(@RequestParam("file") MultipartFile image, @RequestParam("movie") Long movieId, Model model)
 			throws IOException {
@@ -196,7 +196,7 @@ public class MovieController {
 		return "admin/formUpdateMovie.html";
 	}
 
-	@Transactional
+	
 	@GetMapping(value = "/admin/removeImage/{movieId}/{imageId}")
 	public String removeImage(@PathVariable("movieId") Long movieId, @PathVariable("imageId") Long imageId,
 			Model model) {
