@@ -1,9 +1,12 @@
 #Siw Movie 2 - La vendetta
 
-casi d'uso
+Casi d'uso:
+
 UC1 inserimento dati film amministratore
 	
 attore principale: Amministratore
+
+
 	scenario principale di successo:
 		1.l'amministratore seleziona l'opzione "aggiungi film"
 		2.il sistema mostra l'elenco di dati da inserire (titolo, anno, immagine)
@@ -16,6 +19,8 @@ attore principale: Amministratore
 UC2 inserimento dati artista amministratore
 
 attore principale: Amministratore
+
+
 	scenario principale di successo:
 		1.l'amministratore seleziona l'opzione "aggiungi artista"
 		2.il sistema mostra l'elenco di dati da inserire (nome, cognome, ecc)
@@ -29,6 +34,8 @@ attore principale: Amministratore
 UC3 aggiornamento dati film amministratore
 
 attore principale: Amministratore
+
+
 	scenario principale di successo:
 		1.l'amministratore seleziona l'opzione "modifica film"
 		2.il sistema mostra l'elenco di film disponibili
@@ -42,6 +49,8 @@ attore principale: Amministratore
 UC4 aggiornamento dati artista amministratore
 
 attore principale: Amministratore
+
+
 	scenario principale di successo:
 		1.l'amministratore seleziona l'opzione "modifica artista"
 		2.il sistema mostra l'elenco di artisti disponibili
@@ -56,6 +65,8 @@ attore principale: Amministratore
 UC5 inserimento recensione utente registrato
 
 attore principale: Utente Registrato
+
+
 	scenario principale di successo:
 		1.l'utente registrato seleziona un film
 		2.il sistema mostra i dati del film
@@ -70,6 +81,8 @@ attore principale: Utente Registrato
 UC6 modifica recensione utente registrato
 
 attore principale: Utente Registrato
+
+
 	scenario principale di successo:
 		1.l'utente registrato seleziona un film
 		2.il sistema mostra i dati del film compresa la recensione effettuata
@@ -84,6 +97,8 @@ attore principale: Utente Registrato
 UC7 visualizzazione film utente generico
 
 attore principale: Utente Generico
+
+
 	scenario principale di successo:
 		1.l'utente generico accede tramite il portale
 		2.il sistema mostra un pagina di benvenuto
@@ -96,6 +111,8 @@ attore principale: Utente Generico
 UC8 visualizzazione attori utente generico
 
 attore principale: Utente Generico
+
+
 	scenario principale di successo:
 		1.l'utente generico accede tramite il portale
 		2.il sistema mostra un pagina di benvenuto
